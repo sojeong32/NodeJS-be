@@ -22,6 +22,8 @@ mongoose.connect(mongoURI,{useNewUrlParser:true}).then(()=>{
     console.log('DB connection fail', err);
 });
 
-app.listen(5000,()=>{
-    console.log('server on 5000')
-})
+// Heroku 환경에서 동적 포트 사용
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`server on ${PORT}`);
+});
