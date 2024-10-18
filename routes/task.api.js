@@ -4,7 +4,10 @@ const router = express.Router()
 
 router.post('/', taskController.createTask);
 
-router.get('/',taskController.getTask)
+// router.get('/',taskController.getTask)
+router.get('/',(req,res)=>{
+    res.send('API is running')
+})
 
 router.put('/:id',taskController.updateTask)
 
