@@ -8,6 +8,9 @@ userController.createUser = async (req, res) => {
   try {
     const { email, name, password } = req.body;
     const user = await User.findOne({ email: email });
+    if (!password) {
+      throw new Error("비밀번호를 입력하세요.");
+    }
     if (user) {
       throw new Error("이미 가입된 유저입니다.");
     }
@@ -17,7 +20,7 @@ userController.createUser = async (req, res) => {
     await newUser.save();
     res.status(200).json({ status: "success" });
   } catch (error) {
-    res.status(400).json({ status: "fail", error });
+    res.status(400).json({ status: "fail", error: error.message });
   }
 };
 
@@ -38,7 +41,20 @@ userController.loginWithEmail = async (req, res) => {
     }
     throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");
   } catch (error) {
-    res.status(400).json({ status: "fail", error });
+    res.status(400).json({ status: "fail", message: error.message });
+  }
+};
+
+userController.getUser = async (req, res) => {
+  try {
+    const { userId } = req;
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new Error("can not find user");
+    }
+    res.status(200).json({ status: "success", user });
+  } catch (error) {
+    res.status(400).json({ status: "fail", message: error.message });
   }
 };
 
