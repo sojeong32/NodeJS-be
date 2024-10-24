@@ -45,7 +45,7 @@ userController.loginWithEmail = async (req, res) => {
         return res.status(200).json({ status: "success", user, token });
       }
     }
-    throw new Error("아이디 또는 비밀번호가 일치하지 않습니다.");
+    throw new Error("이메일 또는 비밀번호가 일치하지 않습니다.");
   } catch (error) {
     res.status(400).json({ status: "fail", message: error.message });
   }
